@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Library System</title>
+</head>
+
+<body>
+    <h1>Library</h1>
+
+    <div id="bookList">
+        <!-- Book list will be displayed here -->
+    </div>
+
+    <button onclick="bBook()">Borrow Book</button>
+    <button onclick="rBook()">Return Book</button>
+    <button onclick="displayBookList()">Refresh booklist</button>
+
+    <script>
+        // Create an instance of the Library class
+        class Books {
+            constructor(title, author) {
+                this.title = title;
+                this.author = author;
+            }
+        }
+
+        class Library {
+            constructor() {
+                this._books = [];
+            }
+
+            addBook(title, author) {
+                const newBook = new Books(title, author);
+                newBook.borrowed = false;
+                this._books.push(newBook);
+            }
+
+            findBook(title) {
+                for (let i = 0; i < this._books.length; i++) {
+                    if (this._books[i].title === title) {
+                        return i;
+                    }
+                }
+
+                return -1;
+            }
+
+            borrowBook(title) {
+                const index = this.findBook(title);
+                if (index !== -1) {
+                    if (!this._books[index].borrowed) {
+                        this._books[index].borrowed = true;
+                        console.log(`The book "${title}" has been borrowed.`);
+                    } else {
+                        console.log(`The book "${title}" is already borrowed.`);
+                    }
+                } else {
+                    console.log(`The book "${title}" was not found in the library.`);
+                }
+            }
+
+            returnBook(title) {
+                const index = this.findBook(title);
+                if (index !== -1) {
+                    if (this._books[index].borrowed) {
+                        this._books[index].borrowed = false;
+                        console.log(`The book "${title}" has been returned.`);
+                    } else {
+                        console.log(`The book "${title}" is not currently borrowed.`);
+                    }
+                } else {
+                    console.log(`The book "${title}" was not found in the library.`);
+                }
+            }
+
+            // Getter for accessing the books array
+            get books() {
+                return this._books;
+            }
+        }
+
+        const library = new Library();
+
+        library.addBook("Hello world", "J.D. Salinger");
+        library.addBook("The Catcher in the Rye", "J.D. Salinger");
+        library.addBook("To Kill a Mockingbird", "Harper Lee");
+        library.addBook("1984", "George Orwell");
+
+        // Function to display the list of books
+        function displayBookList() {
+            const bookListDiv = document.getElementById("bookList");
+            bookListDiv.innerHTML = "";
+
+            for (let i = 0; i < library.books.length; i++) {
+                const book = library.books[i];
+
+                const bookDiv = document.createElement("div");
+                bookDiv.innerHTML = `<strong>${book.title}</strong> by ${book.author}`;
+                bookListDiv.appendChild(bookDiv);
+            }
+        }
+
+        // Function to handle the borrow book button click
+        function bBook() {
+            const title = prompt("Enter the title of the book to borrow:");
+            library.borrowBook(title);
+            displayBookList();
+        }
+
+        // Function to handle the return book button click
+        function rBook() {
+            const title = prompt("Enter the title of the book to return:");
+            library.returnBook(title);
+            displayBookList();
+        }
+
+        // Initial book list display
+        displayBookList();
+    </script>
+</body>
+
+</html>
