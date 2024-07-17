@@ -9,16 +9,15 @@ import FunctionClick from './components/FunctionClick';
 import ClassClick from './components/ClassClick';
 import EventBind from './components/EventBind';
 import ParentComponent from './components/ParentComponent';
+import Form from './components/Form';
+import ClickCounterTwo from './components/ClickCounterTwo';
+import HoverCounterTwo from './components/HoverCounterTwo';
 
 function App() {
   return (
     <div className="App">
-      {/* <Greet name="Jim" heroName="Browning" />
-      <Welcome name="Bruce" heroName="Wayne" /> */}
-      {/* <FunctionClick />
-      <ClassClick /> */}
-      {/* <EventBind /> */}
-      <ParentComponent />
+      <ClickCounterTwo />
+      <HoverCounterTwo />
 
     </div >
 
