@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Typography, Button, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
     const [name, setName] = useState('');
     const [welcomeMessage, setWelcomeMessage] = useState('Welcome!');
     const [currentTime, setCurrentTime] = useState(new Date());
+    const navigate = useNavigate();
 
     // Update welcome message based on the time of day and name
     useEffect(() => {
@@ -27,7 +29,12 @@ const Home = () => {
         setName(e.target.value);
     };
 
-    const backgroundImage = theme === 'light' ? '/image6.jpg' : '/image13.jpg'; // Adjust image paths as needed
+    const handleContactUsClick = () => {
+        navigate('/contact');
+    };
+
+    const backgroundImage = theme === 'light' ? '/image6.jpg' : '/image12.jpg';
+    const logoImage = theme === 'light' ? '/imageXB.png' : '/whiteX.png';
 
     return (
         <div style={{
@@ -38,12 +45,14 @@ const Home = () => {
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'column',
-            color: theme === 'light' ? '#000' : '#fff', // Adjust text color based on theme
-
+            color: theme === 'light' ? '#000' : '#fff',
         }}>
-            <Container>
-                <Typography variant="h1" align="center" style={{ marginBottom: '20px', fontWeight: 'normal', fontSize: '9rem', fontFamily: 'Cabin' }}>{welcomeMessage}</Typography>
-                <Typography variant="h5" align="center" style={{ marginBottom: '40px' }}>I'm a Computer Science Undergraduate at UCSC</Typography>
+            <Container style={{ textAlign: 'center' }}>
+                <img src={logoImage} alt="Logo" style={{ maxWidth: '300px' }} />
+                <Typography variant="h3" align="center" style={{ fontWeight: 'normal', fontFamily: 'Cabin', fontSize: '5rem', lineHeight: '1.2' }}>{welcomeMessage}</Typography>
+                <Typography variant="subtitle1" align="center" style={{ marginBottom: '40px', fontSize: '1.5rem', lineHeight: '1.5' }}>
+                    {name ? `${name}, w` : 'W'}elcome to X GEN Studios, where we create immersive and innovative gaming experiences!
+                </Typography>
                 <TextField
                     label="Enter your name"
                     variant="outlined"
@@ -53,8 +62,10 @@ const Home = () => {
                     margin="normal"
                     style={{ backgroundColor: '#fff', marginBottom: '20px' }}
                 />
-                <Button variant="contained" color="primary" fullWidth>Get Started</Button>
-                <Typography variant="h5" align="center" style={{ marginTop: '40px' }}>{currentTime.toLocaleTimeString()}</Typography>
+                <Button variant="contained" color="primary" fullWidth onClick={handleContactUsClick}>
+                    Contact Us
+                </Button>
+                <Typography variant="subtitle1" align="center" style={{ marginTop: '40px', marginBottom: '20px', fontWeight: 'normal', fontFamily: 'Chakra Petch', fontSize: '2rem', lineHeight: '1.2' }}>{currentTime.toLocaleTimeString()}</Typography>
             </Container>
         </div>
     );

@@ -11,13 +11,14 @@ import History from './components/History';
 import Team from './components/Team';
 import Values from './components/Values';
 import AboutLayout from './components/AboutLayout';
+import Footer from './components/Footer';
 
 const App = () => {
   const lightTheme = createTheme({
     palette: {
       mode: 'light',
       primary: {
-        main: '#76ABAE',
+        main: '#31363F',  // mint
       },
       secondary: {
         main: '#dc004e',
@@ -37,7 +38,7 @@ const App = () => {
     palette: {
       mode: 'dark',
       primary: {
-        main: '#90caf9',
+        main: '#76ABAE',
       },
       secondary: {
         main: '#f48fb1',
@@ -60,19 +61,26 @@ const App = () => {
     <MuiThemeProvider theme={appliedTheme}>
       <CssBaseline />
       <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutLayout />}>
-            {/* Nested Routes for About section */}
-            <Route path="history" element={<History />} />
-            <Route path="team" element={<Team />} />
-            <Route path="values" element={<Values />} />
-          </Route>
-          <Route path="/contact" element={<ContactForm />} />
-        </Routes>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <NavBar />
+          <div style={{ flex: 1, minHeight: 'calc(100vh - 120px)', }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutLayout />}>
+                {/* Nested Routes for About section */}
+                <Route path="history" element={<History />} />
+                <Route path="team" element={<Team />} />
+                <Route path="values" element={<Values />} />
+              </Route>
+              <Route path="/contact" element={<ContactForm />} />
+            </Routes>
+            <Footer />
+          </div>
+
+        </div>
+
       </Router>
-    </MuiThemeProvider>
+    </MuiThemeProvider >
   );
 };
 

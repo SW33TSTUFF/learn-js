@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Button, Container, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
     textDecoration: 'none',
@@ -12,9 +13,10 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
 
 const StyledButton = styled(Button)(({ theme }) => ({
     margin: '0 10px',
-    padding: '10px 20px',
-    color: theme.palette.text.secondary,
+    padding: '10px 40px',
+    color: '#EEEEEE',
     backgroundColor: theme.palette.primary.main,
+    fontFamily: 'Cabin, sans-serif',
     '&:hover': {
         backgroundColor: theme.palette.primary.dark,
     },
@@ -23,38 +25,51 @@ const StyledButton = styled(Button)(({ theme }) => ({
     }
 }));
 
-const StyledContainer = styled(Container)(({ theme }) => ({
-    padding: '20px',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[3],
-    borderRadius: theme.shape.borderRadius,
-    marginTop: '80px', // Add margin to avoid clipping
-}));
-
 const NavContainer = styled('nav')(({ theme }) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '20px',
+    fontFamily: 'Cabin, sans-serif',
 }));
 
 const AboutLayout = () => {
+    const { theme } = useContext(ThemeContext);
+    const backgroundImage = theme === 'light' ? '/image6.jpg' : '/image12.jpg';
     return (
-        <StyledContainer>
-            <Typography variant="h2" gutterBottom>About Us</Typography>
-            <NavContainer>
-                <StyledNavLink to="history">
-                    <StyledButton variant="contained">History</StyledButton>
-                </StyledNavLink>
-                <StyledNavLink to="team">
-                    <StyledButton variant="contained">Team</StyledButton>
-                </StyledNavLink>
-                <StyledNavLink to="values">
-                    <StyledButton variant="contained">Values</StyledButton>
-                </StyledNavLink>
-            </NavContainer>
+        <div style={{
+            backgroundImage: `url("${backgroundImage}")`,
+            backgroundSize: 'cover',
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            flexDirection: 'column',
+            color: theme === 'light' ? '#000' : '#fff',
+            fontFamily: 'Cabin, sans-serif',
+            textAlign: 'center',
+            padding: '20px',
+            paddingTop: '40px',
+        }}>
+            <div style={{
+                width: '100%',
+                textAlign: 'center',
+            }}>
+                <Typography variant="h3" style={{ marginBottom: '20px', fontWeight: 'normal', fontFamily: 'Chakra Petch', fontSize: '5rem', lineHeight: '1.2' }}>ABOUT</Typography>
+                <NavContainer>
+                    <StyledNavLink to="history">
+                        <StyledButton variant="contained">History</StyledButton>
+                    </StyledNavLink>
+                    <StyledNavLink to="team">
+                        <StyledButton variant="contained">Team</StyledButton>
+                    </StyledNavLink>
+                    <StyledNavLink to="values">
+                        <StyledButton variant="contained">Values</StyledButton>
+                    </StyledNavLink>
+                </NavContainer>
+            </div>
             <Outlet />
-        </StyledContainer>
+        </div >
     );
 };
 
